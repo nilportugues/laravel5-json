@@ -1,0 +1,27 @@
+{
+    "name": "nilportugues/laravel5-json",
+    "type": "library",
+    "description": "Laravel 5 Json API Transformer Package",
+    "keywords": ["laravel", "laravel5", "lumen", "json", "api", "serializer", "transformer", "psr7", "response"],
+    "homepage": "http://nilportugues.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nil Portugués Calderó",
+            "email": "contact@nilportugues.com",
+            "role": "Project Lead Developer"
+        }
+    ],
+    "require": {
+        "nilportugues/json": "~1.0",
+        "symfony/psr-http-message-bridge": "0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "NilPortugues\\Laravel5\\JsonSerializer\\" : "src/NilPortugues/Laravel5/JsonSerializer/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
