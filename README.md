@@ -1,7 +1,7 @@
 # Laravel 5 Json Transformer Package
 
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/aa4fca95-5720-4d07-b35f-3d26e9f0e9e4/mini.png?)](https://insight.sensiolabs.com/projects/aa4fca95-5720-4d07-b35f-3d26e9f0e9e4) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/a3933b7b-13ec-44cf-aef9-0dce25e44ef5/mini.png)](https://insight.sensiolabs.com/projects/a3933b7b-13ec-44cf-aef9-0dce25e44ef5) 
 [![Latest Stable Version](https://poser.pugx.org/nilportugues/laravel5-json/v/stable?)](https://packagist.org/packages/nilportugues/laravel5-json) 
 [![Total Downloads](https://poser.pugx.org/nilportugues/laravel5-json/downloads?)](https://packagist.org/packages/nilportugues/laravel5-json) 
 [![License](https://poser.pugx.org/nilportugues/laravel5-json/license?)](https://packagist.org/packages/nilportugues/laravel5-json) 
