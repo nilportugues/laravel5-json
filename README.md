@@ -2,8 +2,8 @@
 
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/a3933b7b-13ec-44cf-aef9-0dce25e44ef5/mini.png)](https://insight.sensiolabs.com/projects/a3933b7b-13ec-44cf-aef9-0dce25e44ef5) 
-[![Latest Stable Version](https://poser.pugx.org/nilportugues/laravel5-json/v/stable?)](https://packagist.org/packages/nilportugues/laravel5-json) 
-[![Total Downloads](https://poser.pugx.org/nilportugues/laravel5-json/downloads?)](https://packagist.org/packages/nilportugues/laravel5-json) 
+[![Latest Stable Version](https://poser.pugx.org/nilportugues/laravel5-json/v/stable)](https://packagist.org/packages/nilportugues/laravel5-json) 
+[![Total Downloads](https://poser.pugx.org/nilportugues/laravel5-json/downloads)](https://packagist.org/packages/nilportugues/laravel5-json) 
 [![License](https://poser.pugx.org/nilportugues/laravel5-json/license?)](https://packagist.org/packages/nilportugues/laravel5-json) 
 
 
@@ -239,7 +239,40 @@ Content-type: application/json; charset=utf-8
 ```
 
 ```json
-
+{
+    "post_id": 9,
+    "headline": "Hello World",
+    "body": "Your first post",
+    "author": {
+        "user_id": 1,
+        "name": "Post Author"
+    },
+    "comments": [
+        {
+            "comment_id": 1000,
+            "dates": {
+                "created_at": "2015-07-18T12:13:00+00:00",
+                "accepted_at": "2015-07-19T00:00:00+00:00"
+            },
+            "comment": "Have no fear, sers, your king is safe.",
+            "user": {
+                "user_id": 2,
+                "name": "Barristan Selmy"
+            }
+        }
+    ],
+    "links": {
+        "self": {
+            "href": "http://localhost:8000/post/9"
+        },
+        "next": {
+            "href": "http://localhost:8000/post/10"
+        },
+        "comments": {
+            "href": "http://localhost:8000/post/9/comments"
+        }
+    }
+}
 ```
 
 #### Response objects
