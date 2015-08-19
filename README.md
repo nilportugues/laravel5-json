@@ -111,8 +111,8 @@ return [
             'postId',
         ],
         'urls' => [
-            'self' => 'get_post',
-            'comments' => 'get_post_comments',
+            'self' => 'get_post', //named route
+            'comments' => 'get_post_comments',//named route
         ],
     ],
     [
@@ -124,7 +124,7 @@ return [
             'postId',
         ],
         'urls' => [
-            'self' => 'self' => 'get_post',
+            'self' => 'self' => 'get_post',//named route
         ],
     ],
     [
@@ -136,9 +136,9 @@ return [
             'userId',
         ],
         'urls' => [
-            'self' => 'get_user',
-            'friends' => 'get_user_friends',
-            'comments' => 'get_user_comments',
+            'self' => 'get_user',//named route
+            'friends' => 'get_user_friends',//named route
+            'comments' => 'get_user_comments',//named route
         ],
     ],
     [
@@ -150,9 +150,9 @@ return [
             'userId',
         ],
         'urls' => [
-            'self' => 'get_user',
-            'friends' => 'get_user_friends',
-            'comments' => 'get_user_comments',
+            'self' => 'get_user',//named route
+            'friends' => 'get_user_friends',//named route
+            'comments' => 'get_user_comments',//named route
         ],
     ],
     [
@@ -164,7 +164,7 @@ return [
             'commentId',
         ],
         'urls' => [
-            'self' => 'get_comment',
+            'self' => 'get_comment',//named route
         ],
     ],
     [
@@ -176,7 +176,7 @@ return [
             'commentId',
         ],
         'urls' => [
-            'self' => 'get_comment',
+            'self' => 'get_comment',//named route
         ],
     ],
 ];
