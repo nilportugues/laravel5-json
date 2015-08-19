@@ -21,16 +21,36 @@ $ composer require nilportugues/laravel5-json
 
 **Step 1: Add the Service Provider**
 
+**Laravel**
+
+Open up `config/app.php` and add the following line under `providers` array:
+
+```php
+'providers' => [
+
+    //...
+    \NilPortugues\Laravel5\JsonSerializer\Laravel5JsonSerializerServiceProvider::class,
+],
+```
+
+**Lumen**
+
 Open up `bootstrap/app.php`and add the following lines before the `return $app;` statement:
 
 ```php
-$app->register('NilPortugues\Laravel5\JsonSerializer\Laravel5JsonSerializerServiceProvider');
-$app['config']->set('json_mapping', include('json.php'));
+$app->register(\NilPortugues\Laravel5\JsonSerializer\Laravel5JsonSerializerServiceProvider::class);
+$app->configure('json');
+```
+
+Also, enable Facades by uncommenting:
+
+```php
+$app->withFacades();
 ```
 
 **Step 2: Add the mapping**
 
-Create a `json.php` file in `bootstrap/` directory. This file should return an array returning all the class mappings.
+Create a `json.php` file in `config/` directory. This file should return an array returning all the class mappings.
 
 An example as follows:
 
@@ -72,11 +92,11 @@ $post = new Post(
 );
 ```
 
-And a series of mappings, placed in `bootstrap/json.php`, that require to use *named routes* so we can use the `route()` helper function:
+And a series of mappings, placed in `config/json.php`, that require to use *named routes* so we can use the `route()` helper function:
 
 ```php
 <?php
-//bootstrap/json.php
+//config/json.php
 return [
     [
         'class' => 'Acme\Domain\Dummy\Post',
@@ -93,8 +113,8 @@ return [
             'postId',
         ],
         'urls' => [
-            'self' => route('get_post'),
-            'comments' => route('get_post_comments'),
+            'self' => 'get_post',
+            'comments' => 'get_post_comments',
         ],
     ],
     [
@@ -106,7 +126,7 @@ return [
             'postId',
         ],
         'urls' => [
-            'self' => 'self' => route('get_post'),
+            'self' => 'self' => 'get_post',
         ],
     ],
     [
@@ -119,8 +139,8 @@ return [
         ],
         'urls' => [
             'self' => route('get_user'),
-            'friends' => route('get_user_friends'),
-            'comments' => route('get_user_comments'),
+            'friends' => 'get_user_friends',
+            'comments' => 'get_user_comments',
         ],
     ],
     [
@@ -133,8 +153,8 @@ return [
         ],
         'urls' => [
             'self' => route('get_user'),
-            'friends' => route('get_user_friends'),
-            'comments' => route('get_user_comments'),
+            'friends' => 'get_user_friends',
+            'comments' => 'get_user_comments',
         ],
     ],
     [
@@ -146,7 +166,7 @@ return [
             'commentId',
         ],
         'urls' => [
-            'self' => route('get_comment'),
+            'self' => 'get_comment',
         ],
     ],
     [
@@ -158,14 +178,33 @@ return [
             'commentId',
         ],
         'urls' => [
-            'self' => route('get_comment'),
+            'self' => 'get_comment',
         ],
     ],
 ];
 
 ```
 
+
 The named routes belong to the `app/Http/routes.php`. Here's a sample for the routes provided mapping:
+
+**Laravel**
+
+```php
+Route::get(
+  '/post/{postId}',
+  ['as' => 'get_post', 'uses' => 'PostController@getPostAction']
+);
+
+Route::get(
+  '/post/{postId}/comments',
+  ['as' => 'get_post_comments', 'uses' => 'CommentsController@getPostCommentsAction']
+);
+
+//...
+```
+
+**Lumen**
 
 ```php
 $app->get(
@@ -181,7 +220,7 @@ $app->get(
 //...
 ``` 
 
-All of this set up allows you to easily use the `Serializer` service as follows:
+All of this set up allows you to easily use the `JsonSerializer` service as follows:
 
 ```php
 <?php
@@ -189,23 +228,28 @@ All of this set up allows you to easily use the `Serializer` service as follows:
 namespace App\Http\Controllers;
 
 use Acme\Domain\Dummy\PostRepository;
-use NilPortugues\Api\Json\Http\Message\Response;
-use NilPortugues\Serializer\Serializer;
-use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
-
+use NilPortugues\Laravel5\JsonSerializer\JsonSerializer;
+use NilPortugues\Laravel5\JsonSerializer\JsonResponseTrait;
 
 class PostController extends \Laravel\Lumen\Routing\Controller
 {
+    use JsonResponseTrait;
+
     /**
      * @var PostRepository
      */
     private $postRepository;
 
     /**
-     * @param PostRepository $postRepository
-     * @param Serializer $jsonSerializer
+     * @var JsonSerializer
      */
-    public function __construct(PostRepository $postRepository, Serializer $jsonSerializer)
+    private $serializer;
+
+    /**
+     * @param PostRepository $postRepository
+     * @param JsonSerializer $jsonSerializer
+     */
+    public function __construct(PostRepository $postRepository, JsonSerializer $jsonSerializer)
     {
         $this->postRepository = $postRepository;
         $this->serializer = $jsonSerializer;
@@ -225,7 +269,7 @@ class PostController extends \Laravel\Lumen\Routing\Controller
         $transformer->setSelfUrl(route('get_post', ['postId' => $postId]));
         $transformer->setNextUrl(route('get_post', ['postId' => $postId+1]));
 
-        return (new HttpFoundationFactory())->createResponse(new Response($this->serializer->serialize($post)));
+        return $this->response($this->serializer->serialize($post));
     }
 }
 ```
@@ -275,22 +319,22 @@ Content-type: application/json; charset=utf-8
 }
 ```
 
-#### Response objects
+#### Response objects (JsonResponseTrait)
 
-The following PSR-7 Response objects providing the right headers and HTTP status codes are available:
+The following `JsonResponseTrait` methods are provided to return the right headers and HTTP status codes are available:
 
-- `NilPortugues\Api\Json\Http\Message\ErrorResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourceCreatedResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourceDeletedResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourceNotFoundResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourcePatchErrorResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourcePostErrorResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourceProcessingResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\ResourceUpdatedResponse($json)`
-- `NilPortugues\Api\Json\Http\Message\Response($json)`
-- `NilPortugues\Api\Json\Http\Message\UnsupportedActionResponse($json)`
-
-Due to the current lack of support for PSR-7 Requests and Responses in Laravel,  `symfony/psr-http-message-bridge` will bridge between the PHP standard and the Response object used by Laravel automatically, as seen in the Controller example code provided.
+```php
+    private function errorResponse($json);
+    private function resourceCreatedResponse($json);
+    private function resourceDeletedResponse($json);
+    private function resourceNotFoundResponse($json);
+    private function resourcePatchErrorResponse($json);
+    private function resourcePostErrorResponse($json);
+    private function resourceProcessingResponse($json);
+    private function resourceUpdatedResponse($json);
+    private function response($json);
+    private function unsupportedActionResponse($json);
+```
 
 
 <br>

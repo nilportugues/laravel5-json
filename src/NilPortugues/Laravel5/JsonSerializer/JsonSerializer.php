@@ -10,22 +10,12 @@
  */
 namespace NilPortugues\Laravel5\JsonSerializer;
 
-use NilPortugues\Api\Json\JsonTransformer;
-use NilPortugues\Api\Mapping\Mapper;
 use NilPortugues\Serializer\Serializer;
 
 /**
  * Class JsonSerializer.
  */
-class JsonSerializer
+class JsonSerializer extends Serializer
 {
-    /**
-     * @param array $mapping
-     *
-     * @return Serializer
-     */
-    public static function instance(array $mapping)
-    {
-        return new Serializer(new JsonTransformer(new Mapper($mapping)));
-    }
+
 }

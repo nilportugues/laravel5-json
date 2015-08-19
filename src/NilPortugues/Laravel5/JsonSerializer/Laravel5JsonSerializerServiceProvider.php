@@ -10,7 +10,10 @@
  */
 namespace NilPortugues\Laravel5\JsonSerializer;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
+use NilPortugues\Api\Json\JsonTransformer;
+use NilPortugues\Api\Mapping\Mapper;
 
 class Laravel5JsonSerializerServiceProvider extends ServiceProvider
 {
@@ -36,11 +39,45 @@ class Laravel5JsonSerializerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.self::PATH, 'json_mapping');
-        $this->app->singleton(\NilPortugues\Serializer\Serializer::class, function ($app) {
-            return JsonSerializer::instance($app['config']->get('json_mapping'));
-        });
+        $this->mergeConfigFrom(__DIR__.self::PATH, 'jsonapi');
+        $this->app->singleton(\NilPortugues\Laravel5\JsonSerializer\JsonSerializer::class, function ($app) {
+                $mapping = $app['config']->get('jsonapi');
+                $key = md5(json_encode($mapping));
+                $cachedMapping = Cache::get($key);
+                if(!empty($cachedMapping)) {
+                    return unserialize($cachedMapping);
+                }
+                self::parseNamedRoutes($mapping);
+                $serializer = new JsonSerializer(new JsonTransformer(new Mapper($mapping)));
+                Cache::put($key, serialize($serializer),60*60*24);
+                return $serializer;
+            });
     }
+
+    /**
+     * @param array $mapping
+     *
+     * @return mixed
+     */
+    private static function parseNamedRoutes(array &$mapping)
+    {
+        foreach ($mapping as &$map) {
+            self::parseUrls($map);
+        }
+    }
+
+    /**
+     * @param array $map
+     */
+    private static function parseUrls(array &$map)
+    {
+        if (!empty($map['urls'])) {
+            foreach ($map['urls'] as &$namedUrl) {
+                $namedUrl = urldecode(route($namedUrl));
+            }
+        }
+    }
+
 
     /**
      * Get the services provided by the provider.
@@ -49,6 +86,6 @@ class Laravel5JsonSerializerServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['json_mapping'];
+        return ['json'];
     }
 }
