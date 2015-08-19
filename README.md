@@ -136,7 +136,7 @@ return [
             'userId',
         ],
         'urls' => [
-            'self' => route('get_user'),
+            'self' => 'get_user',
             'friends' => 'get_user_friends',
             'comments' => 'get_user_comments',
         ],
@@ -150,7 +150,7 @@ return [
             'userId',
         ],
         'urls' => [
-            'self' => route('get_user'),
+            'self' => 'get_user',
             'friends' => 'get_user_friends',
             'comments' => 'get_user_comments',
         ],
