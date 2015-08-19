@@ -11,11 +11,18 @@
 namespace NilPortugues\Laravel5\JsonSerializer;
 
 use NilPortugues\Serializer\Serializer;
+use NilPortugues\Api\Json\JsonTransformer;
 
 /**
  * Class JsonSerializer.
  */
 class JsonSerializer extends Serializer
 {
-
+    /**
+     * @param HalJsonTransformer $halJsonTransformer
+     */
+    public function __construct(JsonTransformer $jsonTransformer)
+    {
+        parent::__construct($jsonTransformer);
+    }
 }
