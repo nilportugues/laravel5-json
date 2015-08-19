@@ -52,8 +52,6 @@ $app->withFacades();
 
 Create a `json.php` file in `config/` directory. This file should return an array returning all the class mappings.
 
-An example as follows:
-
 
 **Step 3: Usage**
 
