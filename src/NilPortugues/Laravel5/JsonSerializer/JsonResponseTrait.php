@@ -123,3 +123,4 @@ trait JsonResponseTrait
             ->createResponse(new \NilPortugues\Api\Json\Http\Message\UnsupportedActionResponse($json));
     }
 } 
+ 
