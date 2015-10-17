@@ -13,7 +13,7 @@ namespace NilPortugues\Laravel5\JsonSerializer;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use NilPortugues\Api\Json\JsonTransformer;
-use NilPortugues\Api\Mapping\Mapper;
+use NilPortugues\Laravel5\JsonSerializer\Mapper\Mapper;
 
 class Laravel5JsonSerializerServiceProvider extends ServiceProvider
 {
