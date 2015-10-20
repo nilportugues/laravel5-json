@@ -19,7 +19,8 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function errorResponse($json) {
+    private function errorResponse($json)
+    {
         return (new HttpFoundationFactory())
             ->createResponse(new \NilPortugues\Api\Json\Http\Message\ErrorResponse($json));
     }
@@ -122,5 +123,4 @@ trait JsonResponseTrait
         return (new HttpFoundationFactory())
             ->createResponse(new \NilPortugues\Api\Json\Http\Message\UnsupportedActionResponse($json));
     }
-} 
- 
+}

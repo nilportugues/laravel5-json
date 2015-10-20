@@ -43,14 +43,12 @@ class Laravel5JsonSerializerServiceProvider extends ServiceProvider
         $this->app->singleton(\NilPortugues\Laravel5\JsonSerializer\JsonSerializer::class, function ($app) {
                 $mapping = $app['config']->get('jsonapi');
                 $key = md5(json_encode($mapping));
-                $cachedMapping = Cache::get($key);
-                if(!empty($cachedMapping)) {
-                    return unserialize($cachedMapping);
-                }
-                self::parseNamedRoutes($mapping);
-                $serializer = new JsonSerializer(new JsonTransformer(new Mapper($mapping)));
-                Cache::put($key, serialize($serializer),60*60*24);
-                return $serializer;
+
+                return Cache::rememberForever($key, function () use ($mapping) {
+                    self::parseNamedRoutes($mapping);
+
+                    return new JsonSerializer(new JsonTransformer(new Mapper($mapping)));
+                });
             });
     }
 
@@ -69,7 +67,7 @@ class Laravel5JsonSerializerServiceProvider extends ServiceProvider
     /**
      * @param array $map
      */
-    private static function parseUrls(array &$map)
+    private static function parseUrls(&$map)
     {
         if (!empty($map['urls'])) {
             foreach ($map['urls'] as &$namedUrl) {
@@ -77,7 +75,6 @@ class Laravel5JsonSerializerServiceProvider extends ServiceProvider
             }
         }
     }
-
 
     /**
      * Get the services provided by the provider.
