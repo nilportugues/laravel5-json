@@ -1,4 +1,4 @@
-# Laravel 5 Json Transformer Package
+# Laravel 5 JSON Schema Transformer Package
 
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nilportugues/laravel5-json-transformer/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/a3933b7b-13ec-44cf-aef9-0dce25e44ef5/mini.png)](https://insight.sensiolabs.com/projects/a3933b7b-13ec-44cf-aef9-0dce25e44ef5) 
