@@ -2,20 +2,20 @@
 /**
  * Author: Nil Portugués Calderó <contact@nilportugues.com>
  * Date: 8/18/15
- * Time: 11:19 PM
+ * Time: 11:19 PM.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-namespace NilPortugues\Laravel5\JsonSerializer;
+namespace NilPortugues\Laravel5\Json;
 
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 
 trait JsonResponseTrait
 {
     /**
-     * @param  \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function addHeaders(\Psr\Http\Message\ResponseInterface $response)
@@ -28,7 +28,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function errorResponse($json)
+    protected function errorResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ErrorResponse($json)));
@@ -39,7 +39,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourceCreatedResponse($json)
+    protected function resourceCreatedResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourceCreatedResponse($json)));
@@ -50,7 +50,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourceDeletedResponse($json)
+    protected function resourceDeletedResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourceDeletedResponse($json)));
@@ -61,7 +61,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourceNotFoundResponse($json)
+    protected function resourceNotFoundResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourceNotFoundResponse($json)));
@@ -72,7 +72,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourcePatchErrorResponse($json)
+    protected function resourcePatchErrorResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourcePatchErrorResponse($json)));
@@ -83,7 +83,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourcePostErrorResponse($json)
+    protected function resourcePostErrorResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourcePostErrorResponse($json)));
@@ -94,7 +94,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourceProcessingResponse($json)
+    protected function resourceProcessingResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourceProcessingResponse($json)));
@@ -105,7 +105,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function resourceUpdatedResponse($json)
+    protected function resourceUpdatedResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\ResourceUpdatedResponse($json)));
@@ -116,7 +116,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function response($json)
+    protected function response($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\Response($json)));
@@ -127,7 +127,7 @@ trait JsonResponseTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function unsupportedActionResponse($json)
+    protected function unsupportedActionResponse($json)
     {
         return (new HttpFoundationFactory())
             ->createResponse($this->addHeaders(new \NilPortugues\Api\Json\Http\Message\UnsupportedActionResponse($json)));

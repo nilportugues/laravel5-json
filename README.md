@@ -29,7 +29,7 @@ Open up `config/app.php` and add the following line under `providers` array:
 'providers' => [
 
     //...
-    \NilPortugues\Laravel5\JsonSerializer\Laravel5JsonSerializerServiceProvider::class,
+    \NilPortugues\Laravel5\Json\Laravel5JsonServiceProvider::class,
 ],
 ```
 
@@ -38,7 +38,7 @@ Open up `config/app.php` and add the following line under `providers` array:
 Open up `bootstrap/app.php`and add the following lines before the `return $app;` statement:
 
 ```php
-$app->register(\NilPortugues\Laravel5\JsonSerializer\Laravel5JsonSerializerServiceProvider::class);
+$app->register(\NilPortugues\Laravel5\Json\Laravel5JsonServiceProvider::class);
 $app->configure('json');
 ```
 
@@ -111,8 +111,8 @@ return [
             'postId',
         ],
         'urls' => [
-            'self' => 'get_post', //named route
-            'comments' => 'get_post_comments',//named route
+            'self' => ['name' => get_post'], //named route
+            'comments' => ['name' => 'get_post_comments'], //named route
         ],
     ],
     [
@@ -124,7 +124,7 @@ return [
             'postId',
         ],
         'urls' => [
-            'self' => 'self' => 'get_post',//named route
+            'self' => ['name' => 'get_post'], //named route
         ],
     ],
     [
@@ -136,9 +136,9 @@ return [
             'userId',
         ],
         'urls' => [
-            'self' => 'get_user',//named route
-            'friends' => 'get_user_friends',//named route
-            'comments' => 'get_user_comments',//named route
+            'self' => ['name' => 'get_user'], //named route
+            'friends' => ['name' => 'get_user_friends'], //named route
+            'comments' => ['name' => 'get_user_comments'], //named route
         ],
     ],
     [
@@ -150,9 +150,9 @@ return [
             'userId',
         ],
         'urls' => [
-            'self' => 'get_user',//named route
-            'friends' => 'get_user_friends',//named route
-            'comments' => 'get_user_comments',//named route
+            'self' => ['name' => 'get_user'], //named route
+            'friends' => ['name' => 'get_user_friends'], //named route
+            'comments' => ['name' => 'get_user_comments'], //named route
         ],
     ],
     [
@@ -164,7 +164,7 @@ return [
             'commentId',
         ],
         'urls' => [
-            'self' => 'get_comment',//named route
+            'self' => ['name' => 'get_comment'], //named route
         ],
     ],
     [
@@ -176,7 +176,7 @@ return [
             'commentId',
         ],
         'urls' => [
-            'self' => 'get_comment',//named route
+            'self' => ['name' => 'get_comment'], //named route
         ],
     ],
 ];
@@ -226,8 +226,8 @@ All of this set up allows you to easily use the `JsonSerializer` service as foll
 namespace App\Http\Controllers;
 
 use Acme\Domain\Dummy\PostRepository;
-use NilPortugues\Laravel5\JsonSerializer\JsonSerializer;
-use NilPortugues\Laravel5\JsonSerializer\JsonResponseTrait;
+use NilPortugues\Laravel5\Json\JsonSerializer;
+use NilPortugues\Laravel5\Json\JsonResponseTrait;
 
 class PostController extends \Laravel\Lumen\Routing\Controller
 {
@@ -236,12 +236,12 @@ class PostController extends \Laravel\Lumen\Routing\Controller
     /**
      * @var PostRepository
      */
-    private $postRepository;
+    protected $postRepository;
 
     /**
      * @var JsonSerializer
      */
-    private $serializer;
+    protected $serializer;
 
     /**
      * @param PostRepository $postRepository
@@ -276,7 +276,7 @@ class PostController extends \Laravel\Lumen\Routing\Controller
 
 ```
 HTTP/1.1 200 OK
-Cache-Control: private, max-age=0, must-revalidate
+Cache-Control: protected, max-age=0, must-revalidate
 Content-type: application/json; charset=utf-8
 ```
 
@@ -322,16 +322,16 @@ Content-type: application/json; charset=utf-8
 The following `JsonResponseTrait` methods are provided to return the right headers and HTTP status codes are available:
 
 ```php
-    private function errorResponse($json);
-    private function resourceCreatedResponse($json);
-    private function resourceDeletedResponse($json);
-    private function resourceNotFoundResponse($json);
-    private function resourcePatchErrorResponse($json);
-    private function resourcePostErrorResponse($json);
-    private function resourceProcessingResponse($json);
-    private function resourceUpdatedResponse($json);
-    private function response($json);
-    private function unsupportedActionResponse($json);
+    protected function errorResponse($json);
+    protected function resourceCreatedResponse($json);
+    protected function resourceDeletedResponse($json);
+    protected function resourceNotFoundResponse($json);
+    protected function resourcePatchErrorResponse($json);
+    protected function resourcePostErrorResponse($json);
+    protected function resourceProcessingResponse($json);
+    protected function resourceUpdatedResponse($json);
+    protected function response($json);
+    protected function unsupportedActionResponse($json);
 ```
 
 

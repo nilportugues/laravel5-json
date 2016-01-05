@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace NilPortugues\Laravel5\JsonSerializer\Facades;
+namespace NilPortugues\Laravel5\Json\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

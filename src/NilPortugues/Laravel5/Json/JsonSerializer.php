@@ -8,15 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace NilPortugues\Laravel5\JsonSerializer;
+namespace NilPortugues\Laravel5\Json;
 
-use ErrorException;
-use Illuminate\Database\Eloquent\Model;
 use NilPortugues\Api\Json\JsonTransformer;
 use NilPortugues\Serializer\DeepCopySerializer;
 use NilPortugues\Serializer\Drivers\Eloquent\EloquentDriver;
-use ReflectionClass;
-use ReflectionMethod;
 
 /**
  * Class JsonSerializer.
@@ -31,7 +27,6 @@ class JsonSerializer extends DeepCopySerializer
         parent::__construct($jsonTransformer);
     }
 
-
     /**
      * Extract the data from an object.
      *
@@ -41,7 +36,6 @@ class JsonSerializer extends DeepCopySerializer
      */
     protected function serializeObject($value)
     {
-
         $serialized = EloquentDriver::serialize($value);
         if ($value !== $serialized) {
             return $serialized;

@@ -17,9 +17,14 @@
         "symfony/psr-http-message-bridge": "~0.2",
         "nilportugues/serializer-eloquent": "^1.0"
     },
+    "require-dev": {
+        "laravel/laravel": "5.*",
+        "phpunit/phpunit": "4.*",
+        "fabpot/php-cs-fixer": "^1.10"
+    },
     "autoload": {
         "psr-4": {
-            "NilPortugues\\Laravel5\\JsonSerializer\\" : "src/NilPortugues/Laravel5/JsonSerializer/"
+            "NilPortugues\\Laravel5\\Json\\" : "src/NilPortugues/Laravel5/Json/"
         }
     },
     "config": {
